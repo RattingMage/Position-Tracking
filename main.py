@@ -17,12 +17,9 @@ cl = HTTP(
 def hello_world():
     try:
         r = cl.get_positions(
-            category="inverse",
-            symbol="BTCUSD",
+            category="inverse"
         )
         list = r["result"]["list"]
-        list[0]['avgPrice'] = "1"
-        print(f"Тикет: {list[0]['symbol']}\nНаправление: {list[0]['side']}\nЦена входа: {list[0]['avgPrice']}")
         return render_template('positions.html', positions=list)
     except Exception as ex:
         print(ex)
