@@ -27,13 +27,4 @@ def hello_world():
     except Exception as ex:
         print(ex)
         return f"<h1>{ex}</h1>"
-
-
-
-
-
-# API Key: 0zFHX75FgVna96I92H
-# API Secret:  mjoStlNqdaA5KWvhWKtw8fhBnYRTmaYMRnmV
-
-# api_key = "IXNWmFaxuAcD4xwTke",
-# api_secret = "XIfBM67BlE6nZsSuqTpYcr7gTLVd9wVresnx"
+    
