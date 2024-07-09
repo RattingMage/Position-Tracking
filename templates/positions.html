@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positions</title>
+</head>
+<body>
+    <h1>Позиции</h1>
+    <table border="1">
+        <tr>
+            <th>Тикет</th>
+            <th>Направление</th>
+            <th>Цена входа</th>
+            <th>Процент</th>
+            <th>Создать ордер</th>
+        </tr>
+        {% for position in positions %}
+        <tr>
+            <td>{{ position.symbol }}</td>
+            <td>{{ position.side }}</td>
+            <td>{{ position.avgPrice }}</td>
+            <td><input type="number" step="1" id="percent-{{ loop.index }}" oninput="calculateNewPrice({{ loop.index }}, {{ position.avgPrice }})"></td>
+            <td>
+                <form>
+                    <input id="checkbox-{{ loop.index }}" type="checkbox" onclick="toggleNewPrice({{ loop.index }}, {{ position.avgPrice }})">
+                </form>
+            </td>
+        </tr>
+        <tr id="new-price-row-{{ loop.index }}" style="display:none;">
+            <td colspan="5">Новая цена: <span id="new-price-{{ loop.index }}"></span></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function calculateNewPrice(index, avgPrice) {
+            let percentField = document.getElementById(`percent-${index}`);
+            let checkbox = document.getElementById(`checkbox-${index}`);
+            if (checkbox.checked) {
+                let percent = parseFloat(percentField.value);
+                let newPrice = avgPrice + (avgPrice * percent / 100);
+                document.getElementById(`new-price-${index}`).innerText = newPrice.toFixed(2);
+                document.getElementById(`new-price-row-${index}`).style.display = 'table-row';
+            }
+        }
+
+        function toggleNewPrice(index, avgPrice) {
+            let checkbox = document.getElementById(`checkbox-${index}`);
+            if (checkbox.checked) {
+                calculateNewPrice(index, avgPrice);
+            } else {
+                document.getElementById(`new-price-row-${index}`).style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
